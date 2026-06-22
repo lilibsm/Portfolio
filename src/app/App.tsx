@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ArrowLeft, MapPin, Mail, Phone, ArrowDown, ExternalLink, ChevronRight, AlertTriangle, CheckCircle, XCircle } from "lucide-react";
+import { ArrowLeft, MapPin, Mail, Phone, ArrowDown, ExternalLink, ChevronRight, AlertTriangle, CheckCircle, XCircle, Layers, GitBranch, FlaskConical, MessageSquare, Users, CalendarDays, Monitor, Wheat, GitMerge, HeartHandshake, Flag } from "lucide-react";
 
 // ── Images ──────────────────────────────────────────────────────────────────
 import imgProfile from "@/imports/Home/3060f798acef1d98543f5a21d315eafac5ed53a2.png";
@@ -49,27 +49,6 @@ function MethodTag({ label }: { label: string }) {
   );
 }
 
-// ── Step progress bar ─────────────────────────────────────────────────────────
-function StepProgress({ active }: { active: 1 | 2 | 3 }) {
-  const pct = active === 1 ? "25%" : active === 2 ? "64%" : "100%";
-  return (
-    <div className="bg-white rounded-3xl px-4 py-5 flex flex-col gap-3 shrink-0 w-56"
-      style={{ boxShadow: "0 4px 8px rgba(0,0,0,0.12)" }}>
-      <div className="relative h-5 rounded-full" style={{ background: "#d9d9d9" }}>
-        <div className="absolute inset-y-0 left-0 rounded-full"
-          style={{ width: pct, background: "linear-gradient(to right, #b2dde8, #bdb8db)" }} />
-      </div>
-      <div className="flex justify-between px-1">
-        {[1, 2, 3].map((n) => (
-          <span key={n} className="text-xs font-bold"
-            style={{ ...soraBold, color: n <= active ? "#000" : "#908e8e" }}>
-            Step {n}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 // ── Annotation item ──────────────────────────────────────────────────────────
 type AnnotationType = "warning" | "success" | "error";
@@ -100,22 +79,16 @@ function Nav({ page, setPage }: { page: Page; setPage: (p: Page) => void }) {
       style={{ background: TEAL, boxShadow: scrolled ? "0 2px 12px rgba(0,0,0,0.10)" : "none" }}>
       <div className="max-w-[1136px] mx-auto px-6 md:px-10 lg:px-16">
         <div className="flex items-center justify-between h-14 gap-4">
-          {isInner ? (
-            <button onClick={() => setPage("home")} className="flex items-center gap-1.5 transition-opacity hover:opacity-60 text-sm" style={{ ...jost, color: "#1c1b1f" }}>
-              <ArrowLeft size={15} strokeWidth={1.5} /> Return to projects
-            </button>
-          ) : (
-            <button onClick={() => setPage("home")} className="text-xs tracking-widest uppercase opacity-50 hover:opacity-90 transition-opacity" style={{ ...josefin, color: "#1c1b1f" }}>
-              Lili Smyth
-            </button>
-          )}
+          <button onClick={() => setPage("home")} className="text-xs tracking-widest uppercase opacity-50 hover:opacity-90 transition-opacity" style={{ ...josefin, color: "#1c1b1f" }}>
+            Lili Smyth
+          </button>
           <div className="flex items-center gap-5">
             <div className="hidden sm:flex items-center gap-5 text-sm" style={{ ...sora, color: "#1c1b1f" }}>
-              <button onClick={() => setPage("cv")} className="opacity-60 hover:opacity-100 transition-opacity" style={{ textDecoration: page === "cv" ? "underline" : "none" }}>CV</button>
-              <button onClick={() => setPage("home")} className="opacity-60 hover:opacity-100 transition-opacity" style={{ textDecoration: page === "home" ? "underline" : "none" }}>My work</button>
+              <button onClick={() => setPage("cv")} className="opacity-60 hover:opacity-100 transition-opacity">CV</button>
+              <button onClick={() => { setPage("home"); setTimeout(() => document.getElementById("work")?.scrollIntoView({ behavior: "smooth" }), 50); }} className="opacity-60 hover:opacity-100 transition-opacity">My work</button>
             </div>
             <div className="flex items-center gap-2.5">
-              <img src={imgProfile} alt="Lili Smyth" className="w-7 h-7 rounded object-cover" style={{ border: "2px solid rgba(0,0,0,0.15)" }} />
+              <img src={imgProfile} alt="Lili Smyth" className="w-7 h-7 rounded object-cover"  />
               <a href="mailto:lili.paris@icloud.com" className="opacity-50 hover:opacity-100 transition-opacity" aria-label="Email"><Mail size={17} strokeWidth={1.5} color="#1c1b1f" /></a>
               <a href="tel:+64288532788" className="opacity-50 hover:opacity-100 transition-opacity" aria-label="Phone"><Phone size={17} strokeWidth={1.5} color="#1c1b1f" /></a>
             </div>
@@ -133,10 +106,9 @@ function ContactFooter() {
       <div className="max-w-[1136px] mx-auto px-6 md:px-10 lg:px-16 py-16 md:py-24">
         <div className="flex flex-col items-center gap-6 text-center">
           <h2 className="text-3xl md:text-4xl text-black font-normal" style={sora}>Work with me</h2>
-          <p className="text-base text-black/60 max-w-sm" style={sora}>Open to product design roles — in-house or consultancy.</p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 pt-2 flex-wrap">
             <a href="https://linkedin.com/in/lilismyth" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 hover:opacity-60 transition-opacity">
-              <img src={imgProfile} alt="" className="w-7 h-7 rounded object-cover" style={{ border: "2px solid rgba(0,0,0,0.2)" }} />
+              <img src={imgProfile} alt="" className="w-7 h-7 rounded object-cover"  />
               <span className="text-base text-black" style={sora}>linkedin.com/lilismyth</span>
             </a>
             <span className="hidden sm:block text-black/25">·</span>
@@ -193,7 +165,7 @@ function ProjectCard({ title, subtitle, tags, image, onClick }: { title: string;
             <p className="text-xs font-bold uppercase tracking-wider text-black leading-tight" style={josefin}>{title}</p>
             <p className="text-sm text-black/50 mt-0.5" style={jost}>{subtitle}</p>
           </div>
-          <ExternalLink size={13} className="shrink-0 mt-0.5 text-black/25 group-hover:text-black/50 transition-colors" />
+          <span className="shrink-0 text-xs px-2.5 py-1 rounded-full border border-black/15 text-black/40 group-hover:border-black/40 group-hover:text-black/70 transition-colors" style={sora}>View →</span>
         </div>
         <div className="flex flex-wrap gap-1.5">{tags.map((t) => <Pill key={t} label={t} />)}</div>
       </div>
@@ -214,10 +186,8 @@ function HomePage({ setPage }: { setPage: (p: Page) => void }) {
         <div className="max-w-[1136px] mx-auto px-6 md:px-10 lg:px-16 py-16 md:py-24 flex flex-col gap-8">
           <div className="flex flex-col gap-4 max-w-2xl">
             <p className="text-sm text-black/40 tracking-wide" style={sora}>Product designer · Crafting meaningful digital experiences</p>
-            <h1 className="text-3xl md:text-4xl lg:text-5xl leading-tight text-black font-normal" style={sora}>
-              {`I'm Lili Smyth,`}<br />
-              <span className="text-black/40">a product designer passionate about</span><br />
-              creating intuitive, engaging and accessible digital products.
+            <h1 className="text-2xl md:text-3xl leading-snug text-black font-normal" style={sora}>
+              {`I'm Lili Smyth, a product designer passionate about creating intuitive, engaging and accessible digital products solving real user problems through design.`}
             </h1>
           </div>
           <div className="flex flex-wrap gap-3">
@@ -228,7 +198,7 @@ function HomePage({ setPage }: { setPage: (p: Page) => void }) {
               className="inline-flex items-center h-11 px-6 rounded-lg text-sm text-black hover:opacity-60 transition-opacity border border-black"
               style={{ ...sora }}>Get in touch</a>
           </div>
-          <div className="pt-2"><ArrowDown size={20} strokeWidth={1.5} className="animate-bounce text-black/30" /></div>
+          <div className="pt-2"><ArrowDown size={36} strokeWidth={2} className="animate-bounce text-black/70" /></div>
         </div>
       </section>
 
@@ -254,8 +224,7 @@ function HomePage({ setPage }: { setPage: (p: Page) => void }) {
             </div>
             <div className="relative rounded-3xl overflow-hidden shrink-0" style={{ width: "clamp(220px, 32vw, 360px)", aspectRatio: "3/4" }}>
               <img src={imgPortrait} alt="Lili Smyth" className="absolute inset-0 w-full h-full object-cover" />
-              <img src={imgPortraitOverlay} alt="" className="absolute inset-0 w-full h-full object-cover opacity-40" aria-hidden />
-            </div>
+                          </div>
           </div>
         </div>
       </section>
@@ -266,9 +235,6 @@ function HomePage({ setPage }: { setPage: (p: Page) => void }) {
             <div><h2 className="text-xl text-black font-normal" style={sora}>Work</h2><p className="text-sm text-black/40 mt-1" style={sora}>Selected case studies</p></div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <ProjectCard title="Farming disaster relief support tools" subtitle="Custom tool library and dashboard" tags={["Government", "Agriculture", "Detailed design", "User testing"]} image={imgFarmingCard} onClick={() => setPage("project-farming")} />
-              <ProjectCard title="My portfolio" subtitle="The end-to-end process of showcasing my work." tags={["User research"]} image={imgPlaceholder} onClick={() => {}} />
-              <ProjectCard title="My portfolio" subtitle="The end-to-end process of showcasing my work." tags={["User research"]} image={imgPlaceholder} onClick={() => {}} />
-              <ProjectCard title="My portfolio" subtitle="The end-to-end process of showcasing my work." tags={["User research"]} image={imgPlaceholder} onClick={() => {}} />
             </div>
           </div>
         </div>
@@ -279,9 +245,9 @@ function HomePage({ setPage }: { setPage: (p: Page) => void }) {
           <div className="flex flex-col gap-8">
             <div><h2 className="text-xl text-black font-normal" style={sora}>Skills &amp; expertise</h2><p className="text-sm text-black/40 mt-1" style={sora}>What I bring to a team</p></div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {[{ title: "Information architecture", desc: "Structuring content and navigation for clarity and flow." }, { title: "Dev handover", desc: "Precise specs and collaborative design-to-dev process." }, { title: "User testing", desc: "Facilitated sessions, synthesis, and actionable recommendations." }, { title: "BA liaison", desc: "Bridging design intent and business requirements." }, { title: "Stakeholder engagement", desc: "Workshops, presentations, and co-design facilitation." }, { title: "Sprint planning", desc: "Agile ceremonies and backlog prioritisation." }, { title: "Platform design", desc: "Scalable systems and design consistency at scale." }].map(({ title, desc }) => (
+              {[{ title: "Information architecture", desc: "Structuring content and navigation for clarity and flow.", icon: <Layers size={18} strokeWidth={1.5} /> }, { title: "Dev handover", desc: "Precise specs and collaborative design-to-dev process.", icon: <GitBranch size={18} strokeWidth={1.5} /> }, { title: "User testing", desc: "Facilitated sessions, synthesis, and actionable recommendations.", icon: <FlaskConical size={18} strokeWidth={1.5} /> }, { title: "BA liaison", desc: "Bridging design intent and business requirements.", icon: <MessageSquare size={18} strokeWidth={1.5} /> }, { title: "Stakeholder engagement", desc: "Workshops, presentations, and co-design facilitation.", icon: <Users size={18} strokeWidth={1.5} /> }, { title: "Sprint planning", desc: "Agile ceremonies and backlog prioritisation.", icon: <CalendarDays size={18} strokeWidth={1.5} /> }, { title: "Platform design", desc: "Scalable systems and design consistency at scale.", icon: <Monitor size={18} strokeWidth={1.5} /> }].map(({ title, desc, icon }) => (
                 <div key={title} className="bg-white rounded-xl p-5 flex flex-col gap-3" style={{ boxShadow: "0 1px 4px rgba(0,0,0,0.05)" }}>
-                  <div className="w-8 h-8 rounded-md" style={{ background: `linear-gradient(135deg, ${TEAL}, #e0eef1)` }} />
+                  <div className="w-8 h-8 rounded-md flex items-center justify-center text-black/60" style={{ background: `linear-gradient(135deg, ${TEAL}, #e0eef1)` }}>{icon}</div>
                   <p className="text-sm font-bold text-black" style={soraBold}>{title}</p>
                   <p className="text-sm text-black/50 leading-relaxed" style={sora}>{desc}</p>
                 </div>
@@ -291,21 +257,6 @@ function HomePage({ setPage }: { setPage: (p: Page) => void }) {
         </div>
       </section>
 
-      <section className="bg-white">
-        <div className="max-w-[1136px] mx-auto px-6 md:px-10 lg:px-16 py-14 md:py-20">
-          <div className="flex flex-col gap-8">
-            <div><h2 className="text-xl text-black font-normal" style={sora}>Testimonials</h2><p className="text-sm text-black/40 mt-1" style={sora}>What people say</p></div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {[{ name: "Sarah M.", role: "Senior Manager, Deloitte Digital" }, { name: "James L.", role: "Product Lead, Gov. Department" }, { name: "Priya K.", role: "UX Director" }, { name: "Ben H.", role: "Engineering Lead" }, { name: "Anna T.", role: "Project Manager" }, { name: "Chris W.", role: "Stakeholder, Primary Industries" }].map(({ name, role }) => (
-                <div key={name} className="bg-white rounded-xl px-4 py-5 flex flex-col gap-3 border border-black/6" style={{ boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
-                  <div><p className="text-sm text-black" style={sora}>{name}</p><p className="text-xs text-black/40 mt-0.5" style={sora}>{role}</p></div>
-                  <p className="text-sm text-black/55 leading-relaxed italic" style={sora}>"Lili brings a rare combination of strategic clarity and refined craft to every project. A trusted collaborator."</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
       <ContactFooter />
     </main>
   );
@@ -313,52 +264,174 @@ function HomePage({ setPage }: { setPage: (p: Page) => void }) {
 
 // ── CV PAGE ───────────────────────────────────────────────────────────────────
 function CvPage() {
+  const experiences = [
+    {
+      logo: imgDeloitte, logoW: 110, company: "Deloitte Digital",
+      period: "February 2023 – current | 3 years +",
+      role: "Product design consultant",
+      desc: "a product designer passionate about creating intuitive, engaging and accessible digital products solving real user problems through design.",
+      tags: ["Consulting", "UX/UI Design", "Business analysis", "Leader"],
+      impact: [
+        "Lead and contribute to UX projects across various industries, ensuring solutions are user-centric, accessible, and technically feasible.",
+        "Independently manage work streams, plan project timelines, and facilitate meaningful stakeholder workshops.",
+        "Design interfaces and experiences for platforms such as Salesforce, Sitecore, ServiceNow, and PowerBI, aligning with government and enterprise design systems.",
+        "Leverage web development knowledge to create solutions that enhance feasibility, speed up delivery, and optimise implementation.",
+        "Mentor junior designers, provide constructive feedback, and support the team's continuous growth.",
+      ],
+    },
+    {
+      logo: imgStoreStuff, logoW: 72, company: "StoreStuff",
+      period: "January 2023 – current | 3 years",
+      role: "UX Designer",
+      desc: "xx",
+      tags: ["UX/UI Design", "Print design", "Branding"],
+      impact: [
+        "Design physical and digital branding materials, including the company logo, posters, and vehicle wraps.",
+        "Provide UX and design guidance for the StoreStuff website to enhance usability and visual appeal.",
+        "Build screens in Wordpress using elementor and custom css.",
+      ],
+    },
+    {
+      logo: imgUniversity, logoW: 150, company: "University of Sydney",
+      period: "August 2022 – August 2025 | 4 years",
+      role: "Academic tutor",
+      desc: "Web design and development tutor within the Design Computing Teaching Team",
+      tags: ["Teaching", "Mentoring", "Marking"],
+      impact: [
+        "Teach tutorials in Web Design and Development and Advanced Web Design for the Design Computing degree.",
+        "Assess design proposals, low-fidelity wireframes, and website prototypes, guiding students through UX best practices.",
+      ],
+    },
+    {
+      logo: imgPisces, logoW: 100, company: "Pisces",
+      period: "November 2018 – February 2023 | 5 years",
+      role: "Web designer",
+      desc: "xx",
+      tags: ["Web design", "Print design", "Branding"],
+      impact: [
+        "Designed and managed the e-commerce store, increasing brand visibility and engagement.",
+        "Developed digital and print marketing materials to drive customer acquisition and retention.",
+      ],
+    },
+    {
+      logo: imgStoneSoup, logoW: 48, company: "Stone & Chalk",
+      period: "December 2021 – September 2022 | 10 months",
+      role: "Web designer",
+      desc: "a product designer passionate about creating intuitive, engaging and accessible digital products solving real user problems through design.",
+      tags: ["Web design", "UX/UI Design", "Print design"],
+      impact: [
+        "Led the end-to-end design of a new website and mobile application, ensuring a seamless and engaging user experience.",
+        "Designed social media and print materials to support brand awareness and user engagement.",
+      ],
+    },
+    {
+      logo: imgCodeCamp, logoW: 220, company: "CodeCamp",
+      period: "March 2021 – February 2023 | 2 years",
+      role: "Camp teacher",
+      desc: "Instructed classes of primary school children in STEM classes.",
+      tags: ["Teaching", "Mentoring"],
+      impact: [
+        "Instructed classes of 12–30 primary school-age children in a variety of subjects including programming, stop motion animation, video production, brand design, web design, graphic design, and audio production.",
+      ],
+    },
+  ];
+
   return (
     <main>
+      {/* Hero */}
       <section style={{ background: CREAM }}>
-        <div className="max-w-[1136px] mx-auto px-6 md:px-10 lg:px-16 py-14 md:py-24 flex flex-col gap-4">
+        <div className="max-w-[1136px] mx-auto px-6 md:px-10 lg:px-16 pt-14 pb-8 md:pt-24 md:pb-10 flex flex-col gap-4">
           <h1 className="text-5xl md:text-7xl lg:text-8xl leading-none text-black font-normal" style={sora}>Lili Smyth</h1>
           <p className="text-xl md:text-2xl text-black/60 font-normal" style={sora}>Product designer</p>
-          <div className="flex items-center gap-2 text-black/40 mt-1" style={sora}><MapPin size={16} strokeWidth={1.5} /><span className="text-base">Wellington, New Zealand</span></div>
+          <div className="flex items-center gap-2 text-black/40 mt-1" style={sora}>
+            <MapPin size={16} strokeWidth={1.5} /><span className="text-base">Wellington, New Zealand</span>
+          </div>
         </div>
       </section>
+
+      {/* About + contact */}
+      <section style={{ background: CREAM }}>
+        <div className="max-w-[1136px] mx-auto px-6 md:px-10 lg:px-16 pb-14 md:pb-20 flex flex-col gap-6">
+          <div className="flex flex-col gap-3">
+            <SectionLabel>About me</SectionLabel>
+            <p className="text-base md:text-lg text-black leading-relaxed max-w-3xl" style={sora}>
+              {`I'm a UX Designer at Deloitte Digital, passionate about creating intuitive, human-centered solutions that make an impact. With a strong background in UX/UI, web development, and digital strategy, I enjoy tackling complex challenges across diverse industries. Beyond consulting, I'm also part of the teaching team at the University of Sydney, where I share my knowledge with the next generation of designers. I thrive in collaborative environments, combining technical expertise with a strategic mindset to deliver accessible, scalable, and engaging experiences.`}
+            </p>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-5 flex-wrap">
+            <a href="https://linkedin.com/in/lilismyth" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 hover:opacity-60 transition-opacity">
+              <img src={imgProfile} alt="" className="w-6 h-6 rounded object-cover"  />
+              <span className="text-base text-black" style={sora}>linkedin.com/lilismyth</span>
+            </a>
+            <a href="mailto:lili.paris@icloud.com" className="flex items-center gap-2.5 hover:opacity-60 transition-opacity">
+              <Mail size={20} strokeWidth={1.5} color="#1c1b1f" />
+              <span className="text-base text-black" style={sora}>lili.paris@icloud.com</span>
+            </a>
+            <a href="tel:+64288532788" className="flex items-center gap-2.5 hover:opacity-60 transition-opacity">
+              <Phone size={20} strokeWidth={1.5} color="#1c1b1f" />
+              <span className="text-base text-black" style={sora}>+64 28 8532 7884</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Jump to */}
       <section className="bg-white">
-        <div className="max-w-[1136px] mx-auto px-6 md:px-10 lg:px-16 py-10 md:py-14 flex flex-col gap-5">
-          <SectionLabel>About me</SectionLabel>
-          <p className="text-base md:text-lg text-black leading-relaxed max-w-3xl" style={sora}>{`I'm a UX Designer at Deloitte Digital, passionate about creating intuitive, human-centred solutions that make an impact. With a strong background in UX/UI, web development, and digital strategy, I enjoy tackling complex challenges across diverse industries. Beyond consulting, I'm also part of the teaching team at the University of Sydney, where I share my knowledge with the next generation of designers. I thrive in collaborative environments, combining technical expertise with a strategic mindset to deliver accessible, scalable, and engaging experiences.`}</p>
-          <div className="flex flex-col sm:flex-row gap-4 pt-2">
-            {[{ icon: <img src={imgProfile} alt="" className="w-5 h-5 rounded object-cover" />, text: "linkedin.com/lilismyth" }, { icon: <Mail size={17} strokeWidth={1.5} />, text: "lili.paris@icloud.com" }, { icon: <Phone size={17} strokeWidth={1.5} />, text: "+64 28 8532 7884" }].map(({ icon, text }) => (
-              <div key={text} className="flex items-center gap-2 text-black/60 text-sm" style={sora}>{icon}<span>{text}</span></div>
+        <div className="max-w-[1136px] mx-auto px-6 md:px-10 lg:px-16 py-10 md:py-14 flex flex-col gap-6">
+          <p className="text-base text-black font-normal" style={josefin}>Jump to</p>
+          <div className="flex flex-wrap gap-4">
+            {experiences.map(({ logo, logoW, company, role }) => (
+              <a key={company} href={`#exp-${company.replace(/\s+/g, "-")}`}
+                className="bg-[#f9fafb] rounded-xl p-4 flex flex-col gap-3 hover:bg-[#eef2f3] transition-colors"
+                style={{ minWidth: 160 }}>
+                <img src={logo} alt={company} className="h-8 object-contain object-left" style={{ maxWidth: logoW }} />
+                <p className="text-xs font-bold text-black leading-snug" style={soraBold}>{role}</p>
+              </a>
             ))}
           </div>
         </div>
       </section>
+
+      {/* Experience cards */}
       <section style={{ background: CREAM }}>
-        <div className="max-w-[1136px] mx-auto px-6 md:px-10 lg:px-16 py-10 md:py-16">
-          <SectionLabel>My portfolio</SectionLabel>
-          <div className="flex flex-col gap-5 mt-8">
-            {[{ logo: imgDeloitte, logoW: 96, company: "Deloitte Digital", period: "Feb 2023 – present", role: "Product design consultant", tags: ["UX design", "Product design", "Strategy"], desc: "Working across a wide spectrum of clients, industries and product types. I create, explore, validate and deliver design solutions that meet user needs, bringing strong accessibility knowledge and web standards to every engagement." },
-              { logo: imgStoreStuff, logoW: 60, company: "StoreStuff", period: "January 2019 – January 2021 · Expert", role: "UX Designer", tags: ["UX design", "Fine design", "Strategy"], desc: "Cross-functional UX designer driving business value while balancing user needs and stakeholder requirements." },
-              { logo: imgUniversity, logoW: 128, company: "University of Sydney", period: "Feb 2022 – August 2022 · Casual", role: "Academic tutor", tags: ["Teaching", "Mentoring", "Testing"], desc: "Web design and development tutor within the Design Computing Teaching Team." },
-              { logo: imgPisces, logoW: 90, company: "Pisces", period: "November 2020 – February 2021 · Domestic", role: "Web designer", tags: ["Web design", "Fine design", "Branding"], desc: "Designed and developed end-to-end websites for small business owners, translating briefs into polished, brand-consistent digital experiences." },
-              { logo: imgStoneSoup, logoW: 44, company: "Stone & Chalk", period: "September 2021 – September 2022 · Domestic", role: "Web designer", tags: ["Web design", "Join design", "Branding"], desc: "a product designer passionate about creating intuitive, engaging and accessible digital products solving real user problems through design." },
-              { logo: imgCodeCamp, logoW: 200, company: "CodeCamp", period: "September 2021 – January 2023 · 5 years", role: "Camp teacher", tags: ["Teaching", "Learning"], desc: "Had contact classes of primary school children in STEM classes." }
-            ].map(({ logo, logoW, company, period, role, tags, desc }) => (
-              <div key={company} className="bg-white rounded-xl p-5 flex flex-col gap-4" style={{ boxShadow: "0 1px 4px rgba(0,0,0,0.05)" }}>
-                <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-5">
-                  <div className="h-10 flex items-center shrink-0"><img src={logo} alt={company} className="h-8 object-contain" style={{ maxWidth: logoW }} /></div>
-                  <div className="flex flex-col gap-1 flex-1">
-                    <p className="text-xs text-black/40" style={jost}>{period}</p>
-                    <p className="text-sm font-bold text-black" style={soraBold}>{role}</p>
-                    <div className="flex flex-wrap gap-1.5 mt-1">{tags.map((t) => <Pill key={t} label={t} />)}</div>
+        <div className="max-w-[1136px] mx-auto px-6 md:px-10 lg:px-16 py-10 md:py-16 flex flex-col gap-6">
+          <p className="text-base text-black font-normal" style={sora}>My experience</p>
+          <div className="flex flex-col gap-6">
+            {experiences.map(({ logo, logoW, company, period, role, desc, tags, impact }) => (
+              <div key={company} id={`exp-${company.replace(/\s+/g, "-")}`}
+                className="bg-white rounded-2xl p-8 md:p-12 flex flex-col gap-8">
+                {/* Logo + meta */}
+                <div className="flex flex-col gap-4">
+                  <img src={logo} alt={company} className="h-14 object-contain object-left" style={{ maxWidth: logoW * 1.4 }} />
+                  <p className="text-sm text-black/50" style={sora}>{period}</p>
+                  <div className="flex flex-col gap-2">
+                    <h2 className="text-2xl md:text-3xl text-black font-normal" style={sora}>{role}</h2>
+                    {desc !== "xx" && <p className="text-base text-black/70 leading-relaxed max-w-2xl" style={sora}>{desc}</p>}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {tags.map((t) => (
+                      <span key={t} className="px-4 py-2 rounded-xl text-sm text-black bg-white"
+                        style={{ boxShadow: "0 2px 6px rgba(0,0,0,0.15)", ...sora }}>
+                        {t}
+                      </span>
+                    ))}
                   </div>
                 </div>
-                <p className="text-sm text-black/55 leading-relaxed" style={sora}>{desc}</p>
+                {/* Impact */}
+                <div className="flex flex-col gap-3 border-t border-black/6 pt-6">
+                  <p className="text-base text-black" style={sora}>My impact</p>
+                  <ul className="flex flex-col gap-2 list-disc pl-5">
+                    {impact.map((pt) => (
+                      <li key={pt} className="text-base text-black/70 leading-relaxed" style={jost}>{pt}</li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
+
       <ContactFooter />
     </main>
   );
@@ -370,7 +443,7 @@ function FarmingProjectPage({ setPage }: { setPage: (p: Page) => void }) {
     <main>
       {/* ── Hero ── */}
       <section style={{ background: CREAM }}>
-        <div className="max-w-[1136px] mx-auto px-6 md:px-10 lg:px-16 pt-10 pb-0 flex flex-col gap-6">
+        <div className="max-w-[1136px] mx-auto px-6 md:px-10 lg:px-16 py-10 flex flex-col gap-6">
           <h1 className="text-3xl md:text-5xl lg:text-6xl leading-tight text-black font-normal max-w-4xl" style={sora}>
             Farming disaster relief support tools
           </h1>
@@ -386,7 +459,8 @@ function FarmingProjectPage({ setPage }: { setPage: (p: Page) => void }) {
 
       {/* ── Jump-to nav ── */}
       <section className="bg-white border-b border-black/6 sticky top-14 z-40">
-        <div className="max-w-[1136px] mx-auto px-6 md:px-10 lg:px-16 py-4">
+        <div className="max-w-[1136px] mx-auto px-6 md:px-10 lg:px-16 py-4 flex flex-col gap-3">
+          <p className="text-base text-black" style={josefin}>Jump to</p>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[{ label: "Our impact", anchor: "proj-impact" }, { label: "The problem", anchor: "proj-problem" }, { label: "Process", anchor: "proj-process" }, { label: "Features", anchor: "proj-features" }].map(({ label, anchor }) => (
               <a key={anchor} href={`#${anchor}`} className="bg-[#f9fafb] rounded-xl p-3.5 flex items-center justify-between gap-2 hover:bg-[#eef2f3] transition-colors text-sm text-black" style={sora}>
@@ -415,8 +489,14 @@ function FarmingProjectPage({ setPage }: { setPage: (p: Page) => void }) {
         <div className="max-w-[1136px] mx-auto px-6 md:px-10 lg:px-16 py-12 md:py-16 flex flex-col gap-8">
           <div><SectionLabel>Impact</SectionLabel><p className="text-base text-black/55 mt-1" style={sora}>Our impact</p></div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {[{ desc: "Supported 40,000+ primary producers across NSW" }, { desc: "Consolidated 3 legacy apps into one intuitive PWA, enabling shared data and streamlined workflows." }, { desc: "Delivered a federally funded solution mitigating natural disaster impact for primary producers that strengthens long-term industry resilience." }, { desc: "Project outcomes were recognised by the Deloitte AU CTSO of Consulting as a landmark achievement for both the firm and the country and an example of us at our best." }].map(({ desc }, i) => (
+            {[
+              { icon: <Wheat size={24} strokeWidth={1.5} />, desc: "Supported 40,000+ primary producers across NSW" },
+              { icon: <GitMerge size={24} strokeWidth={1.5} />, desc: "Consolidated 3 legacy apps into one intuitive PWA, enabling shared data and streamlined workflows." },
+              { icon: <HeartHandshake size={24} strokeWidth={1.5} />, desc: "Delivered a federally funded solution mitigating natural disaster impact for primary producers that strengthens long-term industry resilience." },
+              { icon: <Flag size={24} strokeWidth={1.5} />, desc: "Project outcomes were recognised by the Deloitte AU CTSO of Consulting as a landmark achievement for both the firm and the country and an example of us at our best." },
+            ].map(({ icon, desc }, i) => (
               <div key={i} className="bg-white rounded-xl p-5 flex flex-col gap-3 border border-black/6">
+                <div className="text-black/60">{icon}</div>
                 <p className="text-sm text-black/70 leading-relaxed" style={sora}>{desc}</p>
               </div>
             ))}
@@ -441,10 +521,12 @@ function FarmingProjectPage({ setPage }: { setPage: (p: Page) => void }) {
               { label: "Technically complex", points: ["The existing tools lack design consistency and reusable components, making learning the tools difficult.", "As each tool is independent, making updates is time-consuming and the apps are not designed for future scaling.", "The tools do not align to branding or accessibility requirements.", "The code components for the design library are outdated, meaning \"OOTB development\" requires a library re-build."] },
             ].map(({ label, points }) => (
               <div key={label} className="bg-white rounded-xl p-5 flex flex-col gap-4">
-                <p className="text-sm text-black/55" style={sora}>{label}</p>
-                <ul className="flex flex-col gap-2 list-disc list-inside">
-                  {points.map((p) => <li key={p} className="text-sm text-black/70 leading-relaxed" style={sora}>{p}</li>)}
-                </ul>
+                <div className="flex flex-col gap-2">
+                  <p className="text-sm text-black/55" style={sora}>{label}</p>
+                  <ul className="flex flex-col gap-2 list-disc pl-4">
+                    {points.map((p) => <li key={p} className="text-sm text-black/70 leading-relaxed" style={sora}>{p}</li>)}
+                  </ul>
+                </div>
               </div>
             ))}
           </div>
@@ -467,8 +549,8 @@ function FarmingProjectPage({ setPage }: { setPage: (p: Page) => void }) {
                   <p className="text-xs text-black/50 mt-1 leading-relaxed" style={sora}>{challenge}</p>
                 </div>
                 <div className="border-t border-black/6 pt-4">
-                  <ul className="flex flex-col gap-2 list-disc list-inside">
-                    {solution.map((s) => <li key={s} className="text-sm text-black/60 leading-relaxed" style={sora}>{s}</li>)}
+                  <ul className="flex flex-col gap-2 list-disc pl-4">
+                    {solution.map((s) => <li key={s} className="text-sm text-black/60 leading-relaxed ml-4" style={sora}>{s}</li>)}
                   </ul>
                 </div>
               </div>
@@ -508,7 +590,17 @@ function FarmingProjectPage({ setPage }: { setPage: (p: Page) => void }) {
               <p className="text-sm text-black/55" style={sora}>Use case identification and documentation</p>
               <p className="text-xl text-black font-normal" style={sora}>Priority user flows journey map</p>
             </div>
-            <StepProgress active={1} />
+            <div className="flex items-center gap-0 shrink-0">
+              {[1,2,3].map((n) => (
+                <div key={n} className="flex items-center">
+                  <div className="flex flex-col items-center gap-1">
+                    <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs" style={{ background: n === 1 ? "#1c1b1f" : "#e5e5e5", color: n === 1 ? "white" : "#aaa", ...soraBold }}>{n}</div>
+                    <span className="text-xs whitespace-nowrap" style={{ ...sora, color: n === 1 ? "#1c1b1f" : "#bbb" }}>Step {n}</span>
+                  </div>
+                  {n < 3 && <div className="w-10 h-px mb-5 mx-1" style={{ background: "#e5e5e5" }} />}
+                </div>
+              ))}
+            </div>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
             <div className="flex flex-col gap-6">
@@ -538,7 +630,17 @@ function FarmingProjectPage({ setPage }: { setPage: (p: Page) => void }) {
               <p className="text-sm text-black/55" style={sora}>Information architecture</p>
               <p className="text-xl text-black font-normal" style={sora}>Sitemap</p>
             </div>
-            <StepProgress active={2} />
+            <div className="flex items-center gap-0 shrink-0">
+              {[1,2,3].map((n) => (
+                <div key={n} className="flex items-center">
+                  <div className="flex flex-col items-center gap-1">
+                    <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs" style={{ background: n <= 2 ? "#1c1b1f" : "#e5e5e5", color: n <= 2 ? "white" : "#aaa", ...soraBold }}>{n}</div>
+                    <span className="text-xs whitespace-nowrap" style={{ ...sora, color: n <= 2 ? "#1c1b1f" : "#bbb" }}>Step {n}</span>
+                  </div>
+                  {n < 3 && <div className="w-10 h-px mb-5 mx-1" style={{ background: n < 2 ? "#1c1b1f" : "#e5e5e5" }} />}
+                </div>
+              ))}
+            </div>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
             <div className="flex flex-col gap-6">
@@ -565,13 +667,31 @@ function FarmingProjectPage({ setPage }: { setPage: (p: Page) => void }) {
               <p className="text-sm text-black/55" style={sora}>Detailed design</p>
               <p className="text-xl text-black font-normal" style={sora}>Wireframes &amp; specifications</p>
             </div>
-            <StepProgress active={3} />
+            <div className="flex items-center gap-0 shrink-0">
+              {[1,2,3].map((n) => (
+                <div key={n} className="flex items-center">
+                  <div className="flex flex-col items-center gap-1">
+                    <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs" style={{ background: "#1c1b1f", color: "white", ...soraBold }}>{n}</div>
+                    <span className="text-xs whitespace-nowrap" style={{ ...sora, color: "#1c1b1f" }}>Step {n}</span>
+                  </div>
+                  {n < 3 && <div className="w-10 h-px mb-5 mx-1" style={{ background: "#1c1b1f" }} />}
+                </div>
+              ))}
+            </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="bg-white rounded-xl p-5 border border-black/6">
+            <div className="bg-white rounded-xl p-5 border border-black/6 flex flex-col gap-3">
+              <div className="flex items-center gap-2">
+                <span className="text-base">📐</span>
+                <p className="text-sm font-bold text-black" style={soraBold}>Scale</p>
+              </div>
               <p className="text-sm text-black leading-relaxed" style={sora}>The detailed design phase of this engagement spanned across <strong>12 weeks</strong>. The screens were divided into <strong>8 use cases</strong> and <strong>27 specifications</strong>, translating to <strong>100+ individual screens</strong>.</p>
             </div>
-            <div className="bg-white rounded-xl p-5 border border-black/6">
+            <div className="bg-white rounded-xl p-5 border border-black/6 flex flex-col gap-3">
+              <div className="flex items-center gap-2">
+                <span className="text-base">🔄</span>
+                <p className="text-sm font-bold text-black" style={soraBold}>Sprint cadence</p>
+              </div>
               <p className="text-sm text-black leading-relaxed" style={sora}>The sprint cadence involved a tech/dev review touchpoint, frequent meetings with agriculture experts and workshops with the client to refine designs. Each design had approximately <strong>3 iterations</strong> at the high fidelity level, following the client's design system guidelines.</p>
             </div>
             <div className="bg-white rounded-xl p-5 border border-black/6 flex flex-col gap-3">
@@ -600,8 +720,8 @@ function FarmingProjectPage({ setPage }: { setPage: (p: Page) => void }) {
               <Annotation type="warning" text="User understanding and behaviour around the 'plan overview' was a concern at the initial opening of the dashboard. Would the user understand how to use it if we didn't include any examples?" />
               <Annotation type="warning" text="'Tips to improve' was a misunderstood action and lacked clarity of what would improve, — their score? their farm?" />
             </div>
-            <div className="rounded-xl overflow-hidden" style={{ boxShadow: "0 4px 16px rgba(0,0,0,0.12)" }}>
-              <img src={imgDashboardIter1} alt="Dashboard iteration 1" className="w-full h-auto object-cover" />
+            <div className="rounded-xl overflow-hidden relative" style={{ boxShadow: "0 4px 16px rgba(0,0,0,0.12)", minHeight: 480 }}>
+              <img src={imgDashboardIter1} alt="Dashboard iteration 1" className="absolute inset-0 w-full h-full object-cover object-top" />
             </div>
           </div>
         </div>
@@ -622,8 +742,8 @@ function FarmingProjectPage({ setPage }: { setPage: (p: Page) => void }) {
               <Annotation type="warning" text="As the designs for the tool were being refined during this time, we required surfacing this on the dashboard as a quick-view." />
               <Annotation type="warning" text="An interest in surfacing some contacts/additional information for users to access if in an emergency or wanted to speak to a person was evident." />
             </div>
-            <div className="rounded-xl overflow-hidden" style={{ boxShadow: "0 4px 16px rgba(0,0,0,0.12)" }}>
-              <img src={imgDashboardIter2} alt="Dashboard iteration 2" className="w-full h-auto object-cover" />
+            <div className="rounded-xl overflow-hidden relative" style={{ boxShadow: "0 4px 16px rgba(0,0,0,0.12)", minHeight: 480 }}>
+              <img src={imgDashboardIter2} alt="Dashboard iteration 2" className="absolute inset-0 w-full h-full object-cover object-top" />
             </div>
           </div>
         </div>
@@ -643,8 +763,8 @@ function FarmingProjectPage({ setPage }: { setPage: (p: Page) => void }) {
               <Annotation type="success" text="An example a tool output is shown under 'feed mix' — this is a high-level summary expressing users day to day actions off the back of the tool recommendation, by clicking view/edit feed mix details users can review the full set of data." />
               <Annotation type="success" text="The client requested we add a tool to the tool library called 'contact' but I experimented with adding a dedicated resources section which was well received and will grow post MVP." />
             </div>
-            <div className="rounded-xl overflow-hidden" style={{ boxShadow: "0 4px 16px rgba(0,0,0,0.12)" }}>
-              <img src={imgDashboardFinal} alt="Dashboard final design" className="w-full h-auto object-cover" />
+            <div className="rounded-xl overflow-hidden relative" style={{ boxShadow: "0 4px 16px rgba(0,0,0,0.12)", minHeight: 480 }}>
+              <img src={imgDashboardFinal} alt="Dashboard final design" className="absolute inset-0 w-full h-full object-cover object-top" />
             </div>
           </div>
         </div>
